@@ -38,16 +38,61 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    var ans= inventors.filter(check_Function1);
+    var ans= ans.map(check_Function2);
+
+    function check_Function1(value, index, array) {
+    	return (value.year>=1500 && value.year<=1600)
+    }
+
+    function check_Function2(value, index , array) {
+    	// body...
+    	// console.log(value.year);
+    	if(value.year>= 1500 && value.year<= 1600){
+    		return value.first+ " " + value.last;
+    		// return "i am here";
+    	}
+    	else return null;
+    }
+
+    console.log(ans);
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    var sorted_array= inventors.sort(comparator);
+
+    function comparator(a,b) {
+    	return a.year-b.year;
+    }
+
+    console.table(sorted_array);
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    var years= inventors.reduce(reducer,0);
+
+    function reducer (total, value) {
+    	// console.log(value.year);
+    	return total + value.year;
+    }
+
+    console.log(years);
+
     // 5. Sort the inventors by years lived
+
+    inventors.forEach(years_lived);
+
+    function years_lived(value){
+    	value.total_years= value.passed- value.year;
+    }
+
+    var sortByYearsLived = inventors.sort(function (a,b) { return a.total_years- b.total_years});
+    console.log(sortByYearsLived);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -55,10 +100,34 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    var newNamesList= people.map(reduceName);
+
+    function reduceName(value){
+    	var name= value.split(" ");
+    	return name[name.length-1];
+    }
+
+    newNamesList.sort();
+    console.log(newNamesList); 
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    var ob= {};
+    ob.car=0;ob.truck=0;ob.bike=0;ob.walk=0;ob.van=0;
+
+    data.forEach(count);
+
+    function count (value) {
+    	if(value==='car') ob.car++;
+    	if(value==='truck') ob.truck++;
+    	if(value=== 'bike') ob.bike++;
+    	if(value==='walk') ob.walk++;
+    	if(value==='van') ob.van++;
+    }
+
+    console.log(ob);
 
   </script>
 </body>

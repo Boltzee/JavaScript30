@@ -17,6 +17,48 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const cities=[];
+//let can also be used instead of const but we want to keep the data as a const.
+fetch(endpoint)
+.then(blob => blob.json())
+.then(data => cities.push(...data));
+
+function findMatches(wordTosearch, cities) {
+	return cities.filter(place  => {
+		// we have to search for the word that can be present in any city or state 
+		const regex = new RegExp(wordTosearch, 'gi');
+		return place.city.match(regex) || place.state.match(regex);
+	});
+}
+
+function numberWithCommas(x){
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function displayMatches() {
+	// console.log(this.value);
+	const matchArray = findMatches( this.value, cities);
+	// console.log(matchArray);
+	const html = matchArray.map(place => {
+		const regex= new RegExp(this.value, 'gi');
+		const placename= place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+		const statename= place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+		return `
+		   <li>
+		       <span class="name">${placename}, ${statename}</span>
+		       <span class="population">${numberWithCommas(place.population)}</span>
+		   </li>
+		`;
+	}).join('');
+	suggestion.innerHTML= html;
+}
+
+const searchInput = document.querySelector('.search')
+const suggestion = document.querySelector('.suggestions')
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
+
 </script>
 </body>
 </html>
