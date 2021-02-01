@@ -46,8 +46,27 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'] ;
 
+  function checkSplit(text) {
+     var arr= text.split(' ');
+     if(arr[0]==='A' || arr[0]==='The' || arr[0]==='An'){
+        delete arr[0];
+        return arr.join('');
+     }
+     else return text;
+  }
+
+  bands.sort(function (a,b) { return (checkSplit(a)>checkSplit(b) ? 1: -1)});
+  console.log(bands);
+  
+  let bandi= document.querySelector('#bands');
+  // console.log(bandi);
+  var htmlText = '';
+  bands.forEach((band) => {
+      htmlText += `<li>${band}</li>`
+  });
+  bandi.innerHTML= htmlText;
 
 </script>
 

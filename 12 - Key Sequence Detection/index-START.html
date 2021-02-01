@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+	let pressed = [];
+	const sec= 'kiran';
+	window.addEventListener('keyup', (e) => {
+		// console.log(e.key);
+		pressed.push(e.key);
+		pressed.splice(-sec.length -1, pressed.length-sec.length);
+		const str= pressed.join('');
+		if(str===sec){
+			console.log('you have successfully entered the konami code');
+			cornify_add();
+		}
+		// console.log(pressed);
+	});
 </script>
 </body>
 </html>
